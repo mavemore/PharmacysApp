@@ -73,12 +73,12 @@ public class PedidoTest {
     @Test
     public void testIntegracion_producto_catalogo() {
         System.out.println("----Test 1----"); 
-        System.out.println("\n(INICIAL) El cat·logo de la farmacia es: " + catalogo.size());
+        System.out.println("\n(INICIAL) El cat√°logo de la farmacia es: " + catalogo.size());
         System.out.println(catalogo.toString());
         Producto producto5 = new Producto("Ciprofloxacina","Medicina",50,15,11.42);
         String resultado = producto5.crear_producto();
         catalogo.add(producto5);
-        System.out.println("\n(FIN) El cat·logo de la farmacia es: " + catalogo.size());
+        System.out.println("\n(FIN) El cat√°logo de la farmacia es: " + catalogo.size());
         System.out.println(catalogo.toString()); 
         
         assertEquals("Se creo el producto exitosamente!", resultado); //experado,obtenido
@@ -125,4 +125,3 @@ public class PedidoTest {
     }
     
 
-}

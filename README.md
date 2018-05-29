@@ -15,13 +15,16 @@ Para este taller realice lo siguiente:
 ##### Acepte la invitación del repositorio la cual fue enviada a su correo que vinculada su cuenta de github.
 
 1. Realice un clone del repositorio:
-	##### git clone https://github.com/mavemore/PharmacysApp.git
+		
+		git clone https://github.com/mavemore/PharmacysApp.git
 
 2. Ingrese a la carpeta PharmacysApp:
-	##### cd PharmacysApp
+		
+		cd PharmacysApp
 
 3. Cree una nueva rama con su nombre:
-	##### git checkout -b nombre1_apellido1_apellido2
+	
+		git checkout -b nombre1_apellido1_apellido2
 
 4. En el archivo PedidoTest.java del proyecto se encuentra codificada 3 pruebas.
    Codifique las pruebas que requiere el taller.
@@ -32,7 +35,8 @@ Para este taller realice lo siguiente:
 
 6. Realice el commit.
 
-7. Haga el push sobre su rama:
-	git push origin su_nombre_usuario_github(puede hacer tantos commits y push como sean necesarios hasta que todo esté correcto)
+7. Haga el push sobre su rama (puede hacer tantos commits y push como sean necesarios hasta que todo esté correcto):
+	
+		git push origin su_nombre_usuario_github
 
 ##### Nota : Para ver la ejecución de sus pruebas ir a https://travis-ci.org/mavemore/PharmacysApp

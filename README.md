@@ -3,7 +3,7 @@
 
 ##### Developers:
     Kattya Desiderio
-	  Stephany Quimba
+	Stephany Quimba
 
 ##### Instrucciones:
 Taller de pruebas con travis.
@@ -15,7 +15,7 @@ Para este taller realice lo siguiente:
 ##### Acepte la invitación del repositorio la cual fue enviada a su correo que vinculada su cuenta de github.
 
 1. Realice un clone del repositorio:
-	##### git clone https://github.com/stepquim/PharmacysApp.git
+	##### git clone https://github.com/mavemore/PharmacysApp.git
 
 2. Ingrese a la carpeta PharmacysApp:
 	##### cd PharmacysApp
@@ -35,4 +35,4 @@ Para este taller realice lo siguiente:
 7. Haga el push sobre su rama:
 	git push origin su_nombre_usuario_github(puede hacer tantos commits y push como sean necesarios hasta que todo esté correcto)
 
-##### Nota : Para ver la ejecución de sus pruebas ir a https://travis-ci.org/stepquim/PharmacysApp
+##### Nota : Para ver la ejecución de sus pruebas ir a https://travis-ci.org/mavemore/PharmacysApp

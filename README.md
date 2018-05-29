@@ -37,6 +37,6 @@ Para este taller realice lo siguiente:
 
 7. Haga el push sobre su rama (puede hacer tantos commits y push como sean necesarios hasta que todo esté correcto):
 	
-		git push origin su_nombre_usuario_github
+		git push origin nombre1_apellido1_apellido2
 
 ##### Nota : Para ver la ejecución de sus pruebas ir a https://travis-ci.org/mavemore/PharmacysApp

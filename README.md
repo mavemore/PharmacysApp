@@ -20,8 +20,8 @@ Para este taller realice lo siguiente:
 2. Ingrese a la carpeta PharmacysApp:
 	##### cd PharmacysApp
 
-3. Cree una nueva rama con el nombre de su usuario de github:
-	##### git checkout -b su_nombre_usuario_github
+3. Cree una nueva rama con su nombre:
+	##### git checkout -b nombre1_apellido1_apellido2
 
 4. En el archivo PedidoTest.java del proyecto se encuentra codificada 3 pruebas.
    Codifique las pruebas que requiere el taller.

@@ -124,4 +124,50 @@ public class PedidoTest {
         System.out.println("----Test 3----\n");      
     }
     
-
+    @Test  
+    public void testIntegracion_TipoPagoHorarioEscogido() {
+        System.out.println("----Test 4----");
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Kerly", 2, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+        Date Horanow = new Date();
+        Pedido pedido = new Pedido(carrito, Horanow, client);
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+        assertEquals("Horario disponible", pedido.ValidHora());
+        System.out.println("----Test 4----");
+    }
+    
+    @Test  
+    public void testIntegracion_ObtenerRecargoTotalPagar() {
+        System.out.println("----Test 5----");
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Kerly", 2, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+        Date Horanow = new Date();
+        Pedido pedido = new Pedido(carrito, Horanow, client);
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+        assertEquals(0.00, pedido.GetRecargo(client, subt), 0.00);
+        System.out.println("El recargo es: " + pedido.GetRecargo(client, subt));
+        System.out.println("----Test 5----");
+    }
+}

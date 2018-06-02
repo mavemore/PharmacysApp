@@ -1,4 +1,4 @@
-/*
+﻿/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -73,12 +73,12 @@ public class PedidoTest {
     @Test
     public void testIntegracion_producto_catalogo() {
         System.out.println("----Test 1----"); 
-        System.out.println("\n(INICIAL) El catálogo de la farmacia es: " + catalogo.size());
+        System.out.println("\n(INICIAL) El catÃ¡logo de la farmacia es: " + catalogo.size());
         System.out.println(catalogo.toString());
         Producto producto5 = new Producto("Ciprofloxacina","Medicina",50,15,11.42);
         String resultado = producto5.crear_producto();
         catalogo.add(producto5);
-        System.out.println("\n(FIN) El catálogo de la farmacia es: " + catalogo.size());
+        System.out.println("\n(FIN) El catÃ¡logo de la farmacia es: " + catalogo.size());
         System.out.println(catalogo.toString()); 
         
         assertEquals("Se creo el producto exitosamente!", resultado); //experado,obtenido
@@ -123,5 +123,65 @@ public class PedidoTest {
         assertEquals(true, pa.getTipo());//experado,obtenido
         System.out.println("----Test 3----\n");      
     }
+    
+     @Test  
+    public void testIntegracion_PagoSubtotal_horarioEntrega() {
+        System.out.println("----Test 4----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pago=new Pago();
+        //Ingresa el tipo de pago
+        pago.crear_pago(true,"");        
+        //Se coloca el cliente Kelly en que se Encuentra en el Sector Centro
+        Cliente cliente=new Cliente("Kelly", 2, pago);
+        System.out.println(cliente.InfoPer());
+        System.out.println( pago.validar_pago(pago));
+        double subtotal=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subtotal);
+        //Se ingrese la hora del pedido.       
+        Pedido pedido = new Pedido(carrito,new Date(),cliente);
+        System.out.println(pedido.ValidHora());
+        //Se supone que a esta (15:44 pm) hora debe estar disponible
+        assertEquals("Horario disponible", pedido.ValidHora());//experado,obtenido
+        System.out.println("\n----Test 4----\n");      
+}
+    
+    @Test  
+    public void testIntegracion_recargo_total() {
+        System.out.println("----Test 5----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pago=new Pago();
+        //Ingresa el tipo de pago
+        pago.crear_pago(true,"");
+        //Se coloca el cliente Kelly en que se Encuentra en el Sector Centro
+        Cliente client=new Cliente("Kelly", 2, pago);
+        System.out.println(client.InfoPer());
+        System.out.println( pago.validar_pago(pago));
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+        //Pedido del cliente
+        Pedido pedido = new Pedido(carrito,new Date(),client);
+        //Recargo por el pedido del cliente que se encuentra en el centro.
+        double recargo = pedido.GetRecargo(client, subt);
+        System.out.println("El recargo es: " + recargo);
+        //se obtiene el total del pedido
+        double total = pedido.TotalPedido();
+        System.out.println("El total del pedido es: " + total);
+        assertEquals(13.0, total,0.01);//experado,obtenido
+        System.out.println("\n----Test 5----\n");      
+    }
+}
     
 

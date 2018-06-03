@@ -124,4 +124,72 @@ public class PedidoTest {
         System.out.println("----Test 3----\n");      
     }
     
+    @Test  
+    public void testIntegracion_ConfirmarPedido() {
+        //Desde las 8 hasta las 9
+        System.out.println("----Test 4----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Diclofenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Kerly", 1, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+
+
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+        assertEquals(true, pa.getTipo());//experado,obtenido
+        System.out.println("----Test 3----\n");     
+
+        //Valida si el pedido se realiza dentro del horario de atencion
+        Pedido pedido = new Pedido(carrito, new Date(), client);
+        
+        assertEquals("El horario es disponible", pedido.ValidHora()); //esperado,obtenido
+        System.out.println("----Test 4----");
+    }
+
+    @Test  
+    public void testIntegracion_Recargo() {
+        //Desde las 8 hasta las 9
+        System.out.println("----Test 5----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Redoxon");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        carrito.add(detalle1);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Kerly", 1, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+
+
+        double subt=detalle1.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);     
+
+        //Valida si el pedido se realiza dentro del horario de atencion
+        Pedido pedido = new Pedido(carrito, new Date(), client);
+        System.out.println("Horario válido", pedido.ValidHora());
+
+        //Obtiene el recargo
+        double recargo = pedido.GetRecargo(client, subt);
+        System.out.println("El recargo es de: ", recargo);
+        assertEquals(2.00, recargo);
+
+        //Total a pagar
+        double totalAPagar = pedido.TotalPedido();
+        System.out.println("El total a pagar es: ", totalAPagar);
+        assertEquals(9.80, totalAPagar); //esperado,obtenido
+        System.out.println("----Test 5----");
+    }
+    
 

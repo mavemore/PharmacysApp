@@ -124,4 +124,65 @@ public class PedidoTest {
         System.out.println("----Test 3----\n");      
     }
     
+	@Test
+	public void testIntegracion_TipoPagoHorarioEscogido() {
+        System.out.println("----Test 4----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Diclofenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Kerly", 2, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+		//Realizando la validación de hora
+		Date horaActual = new Date();
+		Pedido nuevoPedido = Pedido(carrito, horaActual, client);
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+        assertEquals("El horario disponible es: pedido.ValidHora());
+        System.out.println("----Test 4----\n");      
+    }
 
+	
+	@Test  
+    public void testIntegracion_PagoSubtotalHora() {
+        System.out.println("----Test 5----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Buscapina");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Redoxon");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+		
+        //Se muentra el contenido del carrito de compras
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Se ingresa la forma de pago del cliente
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Esteban", 1, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+		
+		//Procedemos  a realizar el pedido
+		Date horaActual = new Date();
+        Pedido nuevoPedido = new Pedido(carrito, horaActual, client);
+		System.out.println(nuevoPedido.ValidHora());
+		
+		//Obtener recargo de la compra
+		System.out.println("El recargo en su compra es: );
+		double recargoCompra = nuevoPedido.GetRecargo(client, subt);
+		System.out.println("$ " + recargoCompra);
+		
+		
+		//Total a pagar
+        assertEquals(13,nuevoPedido.TotalPedido() ));//experado,obtenido
+        System.out.println("----Test 5----\n");      
+    }

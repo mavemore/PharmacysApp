@@ -123,5 +123,22 @@ public class PedidoTest {
         assertEquals(true, pa.getTipo());//experado,obtenido
         System.out.println("----Test 3----\n");      
     }
+
+        @Test  
+    public void testIntegracion_PagoSubtotal() {
+        System.out.println("----Test 4----");      
+        Pago pa=new Pago();
+        Cliente cliente = new Cliente("Kerly", 2, pa);
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Diclofenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        Date hora = new Date();
+        Pedido pedido = new Pedido(carrito, hora, cliente);
+        assertEquals("Horario disponible", pedido.ValidHora();
+        System.out.println("----Test 4----\n");      
+    }
     
 

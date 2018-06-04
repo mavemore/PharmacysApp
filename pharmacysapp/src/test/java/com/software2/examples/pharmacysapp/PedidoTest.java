@@ -124,4 +124,29 @@ public class PedidoTest {
         System.out.println("----Test 3----\n");      
     }
     
+    @Test  
+    public void testIntegracion_ConfirmarPedido() {
+        System.out.println("----Test 4----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);       
+        carrito.add(detalle1);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        //Ingresa el cliente
+        Cliente client=new Cliente("Kerly", 2, pa);
+        System.out.println(client.InfoPer());
+        //Ingresa el pedido
+        Date date = new Date();
+        DateFormat Horanow = new SimpleDateFormat("HH:mm");
+
+        Pedido pedido = new Pedido(new ArrayList<DetallePedido>(Arrays.asList(detalle1,detalle2)),date,client);
+
+        assertEquals("Horario disponible", pedido.ValidHora());//experado,obtenido
+        System.out.println("----Test 4----\n");      
+    }
 

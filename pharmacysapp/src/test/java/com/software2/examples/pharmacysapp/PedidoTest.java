@@ -15,7 +15,6 @@ import java.text.SimpleDateFormat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -32,8 +31,6 @@ public class PedidoTest {
     private static ArrayList<DetallePedido> carrito;
     
     public static void initCatalogo() {
-        
-       
         catalogo = new ArrayList<Producto>();
         carrito = new ArrayList<DetallePedido>();
         
@@ -47,7 +44,6 @@ public class PedidoTest {
         catalogo.add(producto3);
         catalogo.add(producto4);
     }
-    
     
     public Producto obtener_producto_catalogo(ArrayList<Producto> productos, String clave){
         Producto encontrado = null;
@@ -123,5 +119,66 @@ public class PedidoTest {
         assertEquals(true, pa.getTipo());//experado,obtenido
         System.out.println("----Test 3----\n");      
     }
-    
 
+    @Test  
+    public void testIntegracion_ConfirmarPedido_TipoPago() {
+        System.out.println("----Test 4----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Kerly", 2, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+
+        //Confirmar horario
+        Pedido pedido = new Pedido(carrito, new Date(), client);
+        assertEquals("Horario disponible", pedido.ValidHora());//experado,obtenido
+
+        //assertEquals(true, pa.getTipo());//experado,obtenido
+        System.out.println("----Test 4----\n");      
+    }
+    
+    @Test  
+    public void testIntegracion_Recargo() {
+        System.out.println("----Test 5----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Redoxon");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Kerly", 2, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+
+        //Confirmar horario
+        Pedido pedido = new Pedido(carrito, new Date(), client);
+        System.out.println("Horario ", pedido.ValidHora())
+
+        //Obtener recargo
+        double recargo = pedido.GetRecargo(); 
+        assertEquals(2.00, recargo);//experado,obtenido
+
+        //Obtener resumen de pago
+        assertEquals(20.30, pedido.TotalPedido());
+
+        //assertEquals(true, pa.getTipo());//experado,obtenido
+        System.out.println("----Test 5----\n");      
+    }

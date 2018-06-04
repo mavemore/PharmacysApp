@@ -37,7 +37,7 @@ public class PedidoTest {
         catalogo = new ArrayList<Producto>();
         carrito = new ArrayList<DetallePedido>();
         
-        Producto producto1 = new Producto("Dicloflenaco","Medicina",4,1,10.5);
+        Producto producto1 = new Producto("Diclofenaco","Medicina",4,1,10.5);
         Producto producto2 = new Producto("Buscapina","Medicina",20,5,5.6);
         Producto producto3 = new Producto("Analgan","Medicina",10,2,2.50);
         Producto producto4 = new Producto("Redoxon","Medicina",30,5,7.80);
@@ -73,12 +73,12 @@ public class PedidoTest {
     @Test
     public void testIntegracion_producto_catalogo() {
         System.out.println("----Test 1----"); 
-        System.out.println("\n(INICIAL) El catálogo de la farmacia es: " + catalogo.size());
+        System.out.println("\n(INICIAL) El catalogo de la farmacia es: " + catalogo.size());
         System.out.println(catalogo.toString());
         Producto producto5 = new Producto("Ciprofloxacina","Medicina",50,15,11.42);
         String resultado = producto5.crear_producto();
         catalogo.add(producto5);
-        System.out.println("\n(FIN) El catálogo de la farmacia es: " + catalogo.size());
+        System.out.println("\n(FIN) El catalogo de la farmacia es: " + catalogo.size());
         System.out.println(catalogo.toString()); 
         
         assertEquals("Se creo el producto exitosamente!", resultado); //experado,obtenido
@@ -124,4 +124,64 @@ public class PedidoTest {
         System.out.println("----Test 3----\n");      
     }
     
-
+    @Test
+    public void testIntegracion_subtotal_horario(){
+        System.out.println("----Test 4----");
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Diclofenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Kerly", 2, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));        
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+        assertEquals(true, pa.getTipo());//experado,obtenido
+        //Valida si el pedido fue realizado dentro del horario de atencion segun el sector
+        Pedido ped = new Pedido(carrito, new Date(),client);
+        assertEquals("Fuera de Horario disponible", ped.ValidHora()); //Resultado esperado
+        System.out.println(ped.ValidHora());
+        System.out.println("----Test 4----\n");
+    }
+    
+    @Test
+    public void testIntegracion_recargo_total(){
+        System.out.println("----Test 5----");
+        Producto p1 = obtener_producto_catalogo(catalogo,"Buscapina");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Redoxon");
+        DetallePedido detalle1 = new DetallePedido(p1,2);
+        DetallePedido detalle2 = new DetallePedido(p2,3);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Eliza", 3, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));        
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+        assertEquals(true, pa.getTipo());//experado,obtenido
+        //Valida si el pedido fue realizado dentro del horario de atencion segun el sector
+        Pedido ped = new Pedido(carrito, new Date(),client);
+        assertEquals("Fuera de Horario disponible", ped.ValidHora()); //Resultado esperado
+        System.out.println(ped.ValidHora());
+        //Retorna el valor de recargo segun el sector
+        
+        assertEquals(0.00, ped.GetRecargo(client, subt),0); //Resultado esperado
+        System.out.println("El recargo es: " + ped.GetRecargo(client, subt));
+        //Retorna el total a pagar
+        assertEquals(34.59, ped.TotalPedido(),0.1); //Resultado esperado
+        System.out.println("El total a pagar: " + ped.TotalPedido());
+        System.out.println("----Test 5----\n");
+    }
+}

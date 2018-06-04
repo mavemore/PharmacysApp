@@ -139,7 +139,7 @@ public class PedidoTest {
         Cliente client=new Cliente("Kerly", 2, pa);
         System.out.println(client.InfoPer());
         System.out.println( pa.validar_pago(pa));
-        Date Horanow = new Date();
+        Date Horanow = new Date(2018,2,5,10,00,00); // set date para que no tenga errores al hacer los test en una fecha indicada
         Pedido pedido = new Pedido(carrito, Horanow, client);
         double subt=detalle1.subtotal +detalle2.subtotal;
         System.out.println("El subtotal a pagar es: " + subt);
@@ -151,7 +151,7 @@ public class PedidoTest {
     public void testIntegracion_ObtenerRecargoTotalPagar() {
         System.out.println("----Test 5----");
         Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
-        Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Buscapina");
         DetallePedido detalle1 = new DetallePedido(p1,1);
         DetallePedido detalle2 = new DetallePedido(p2,1);
         carrito.add(detalle1);
@@ -162,11 +162,11 @@ public class PedidoTest {
         Cliente client=new Cliente("Kerly", 2, pa);
         System.out.println(client.InfoPer());
         System.out.println( pa.validar_pago(pa));
-        Date Horanow = new Date();
+        Date Horanow = new Date(2018,2,5,10,00,00);
         Pedido pedido = new Pedido(carrito, Horanow, client);
         double subt=detalle1.subtotal +detalle2.subtotal;
         System.out.println("El subtotal a pagar es: " + subt);
-        assertEquals(0.00, pedido.GetRecargo(client, subt), 0.00);
+        assertEquals(2.0, pedido.GetRecargo(client, subt), 0.01);
         System.out.println("El recargo es: " + pedido.GetRecargo(client, subt));
         System.out.println("----Test 5----");
     }

@@ -81,7 +81,7 @@ public class PedidoTest {
         System.out.println("\n(FIN) El catálogo de la farmacia es: " + catalogo.size());
         System.out.println(catalogo.toString()); 
         
-        assertEquals("Se creo el producto exitosamente!", resultado); //experado,obtenido
+        assertEquals("Se creo el producto exitosamente!", resultado); //esperado,obtenido
         
         System.out.println("----Test 1----\n"); 
     }
@@ -95,7 +95,7 @@ public class PedidoTest {
         //visualizar el pedido con los productos seleccionados.
         System.out.println("*******Carrito*****");
         System.out.println(carrito.toString());
-        assertEquals(1, carrito.size()); //experado,obtenido
+        assertEquals(1, carrito.size()); //esperado,obtenido
         System.out.println("----Test 2----\n"); 
     }
     
@@ -120,8 +120,57 @@ public class PedidoTest {
         System.out.println( pa.validar_pago(pa));
         double subt=detalle1.subtotal +detalle2.subtotal;
         System.out.println("El subtotal a pagar es: " + subt);
-        assertEquals(true, pa.getTipo());//experado,obtenido
+        assertEquals(true, pa.getTipo());//esperado,obtenido
         System.out.println("----Test 3----\n");      
+    }
+	
+	@Test  
+    public void testIntegracion_PedidoValido() {
+        System.out.println("----Test 4----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Pedro", 2, pa);
+        //Obtener los datos necesarios para el pedido
+        //Fecha
+        Date date = new Date();
+        Pedido pedido = new Pedido(carrito,date,clientl);
+        pedido.validHora();
+        assertEquals("Horario disponible", pedido.validHora());//esperado,obtenido
+        System.out.println("----Test 4----\n");      
+    }
+
+    @Test
+    public void testIntegracion_RecargoYtotal() {
+    	//Recargo debe ser de 4 y el total debería ser 5.6+4=9.6
+        System.out.println("----Test 5----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Buscapina");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        carrito.add(detalle1);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Pablo", 1, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+        double subt=detalle1.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+        Date date = new Date();
+        Pedido pedido = new Pedido(carrito,date,client);
+        pedido.validHora();
+        assertEquals(9.6, pedido.TotalPedido());//esperado,obtenido
+        pedido.ToStringTotal();
+        System.out.println("----Test 5----\n");      
     }
     
 

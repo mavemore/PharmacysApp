@@ -145,7 +145,31 @@ public class PedidoTest {
         System.out.println("El subtotal a pagar es: " + subt);
         Pedido p = new Pedido(carrito,(Date) new SimpleDateFormat("HH:mm"), client);
         assertEquals("Horario disponible", p.ValidHora());//experado,obtenido
-        System.out.println("----Test 3----\n");      
+        System.out.println("----Test 4----\n");      
+    }
+    
+@Test  
+    public void testIntegracion_PagoSubtotal_hora() {
+        System.out.println("----Test 5----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Diclofenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Jonathan", 3, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+        double subt=detalle1.subtotal +detalle2.subtotal;
+        System.out.println("El subtotal a pagar es: " + subt);
+        Pedido p = new Pedido(carrito,(Date) new SimpleDateFormat("HH:mm"), client);
+        assertEquals(13,p.TotalPedido() ));//experado,obtenido
+        System.out.println("----Test 5----\n");      
     }
     
 

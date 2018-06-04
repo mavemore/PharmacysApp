@@ -123,5 +123,86 @@ public class PedidoTest {
         assertEquals(true, pa.getTipo());//experado,obtenido
         System.out.println("----Test 3----\n");      
     }
+
+
+    @Test
+    public void testIntegracion_Pago_horario() {
+        System.out.println("----Test 4----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        DetallePedido detalle2 = new DetallePedido(p2,1);
+        carrito.add(detalle1);
+        carrito.add(detalle2);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client=new Cliente("Kerly", 2, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+
+        //validacion de la hora
+        Date date = new Date();
+        date.getHours();
+
+        Pedido pe = new Pedido(carrito, date, client);
+        String hora = pe.ValidHora();
+        System.out.println(hora);
+
+        if((hora).equals("Horario disponible")){
+            double subt = detalle1.subtotal + detalle2.subtotal;
+            System.out.println("El subtotal a pagar es: " + subt);
+            assertEquals(true, pa.getTipo());
+        }else{
+            System.out.println("El pedido no se pudo realizar");
+        }    
+        
+        System.out.println("----Test 4----\n");      
+    }
+
+
+    @Test  
+    public void testIntegracion_Recargo_PagoTotal (){
+
+        System.out.println("----Test 5----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Redoxon");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        carrito.add(detalle1);
+                
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa = new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        Cliente client = new Cliente("Bryan", 1, pa);
+        System.out.println(client.InfoPer());
+        System.out.println( pa.validar_pago(pa));
+        
+        //Valida hora 
+        Date date = new Date();
+        date.getHours();
+                
+        Pedido pe = new Pedido(carrito, date, client);
+        String hora = pe.ValidHora();
+        System.out.println(hora);
+        
+        if((hora).equals("Horario disponible")){
+            double subt = detalle1.subtotal;
+            System.out.println("El subtotal a pagar es: " + subt);
+            assertEquals(true, pa.getTipo());
+            
+            //Recargo y total a pagar
+            double total = pe.TotalPedido();
+            System.out.println(pe.ToStringTotal() + "El Total a pagar es: " + total);
+        
+        }else{
+            System.out.println("El pedido no se pudo realizar");
+        }    
+        
+        System.out.println("----Test 5----\n");      
+    }
+
     
 

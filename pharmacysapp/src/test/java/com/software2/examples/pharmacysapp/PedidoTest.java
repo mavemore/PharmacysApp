@@ -128,6 +128,8 @@ public class PedidoTest {
     
      @Test  
     public void testIntegracion_PedidoValido() {
+        //Productos analga, diclofenaco (1,1)
+        //Cliente: Kerly, Centro, efectivo
         System.out.println("----Test 4----");      
         Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
         Producto p2 = obtener_producto_catalogo(catalogo,"Dicloflenaco");
@@ -146,13 +148,15 @@ public class PedidoTest {
         Date date = new Date();
         Pedido pedido = new Pedido(carrito,date,clientl);
         pedido.validHora();
-        assertEquals("Horario disponible", pedido.validHora());//experado,obtenido
+        assertEquals("Horario disponible", pedido.validHora());//esperado,obtenido
         System.out.println("----Test 4----\n");      
     }
 
     @Test
     public void testIntegracion_RecargoYtotal() {
-    	//Recargo debe ser de 4 y el total debería ser 8.1+4=12.1
+    	//Recargo debe ser de 4 porque el cliente es del norte y el total debería ser 8.1+4=12.1
+        //Productos: analgan, buscapina (1,2)
+        //cliente: Juan, norte, efectivo
         System.out.println("----Test 5----");      
         Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
         Producto p2 = obtener_producto_catalogo(catalogo,"Buscapina");
@@ -173,7 +177,8 @@ public class PedidoTest {
         Date date = new Date();
         Pedido pedido = new Pedido(carrito,date,client);
         pedido.validHora();
-        assertEquals(12.1, pedido.TotalPedido());//experado,obtenido
+        assertEquals(12.1, pedido.TotalPedido());//esperado,obtenido
         pedido.ToStringTotal();
+        System.out.println("El total a pagar es: " + pedido.Total);
         System.out.println("----Test 5----\n");      
     }

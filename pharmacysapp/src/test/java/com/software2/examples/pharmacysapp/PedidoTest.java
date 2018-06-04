@@ -37,7 +37,7 @@ public class PedidoTest {
         catalogo = new ArrayList<Producto>();
         carrito = new ArrayList<DetallePedido>();
         
-        Producto producto1 = new Producto("Dicloflenaco","Medicina",4,1,10.5);
+        Producto producto1 = new Producto("Diclofenaco","Medicina",4,1,10.5);
         Producto producto2 = new Producto("Buscapina","Medicina",20,5,5.6);
         Producto producto3 = new Producto("Analgan","Medicina",10,2,2.50);
         Producto producto4 = new Producto("Redoxon","Medicina",30,5,7.80);

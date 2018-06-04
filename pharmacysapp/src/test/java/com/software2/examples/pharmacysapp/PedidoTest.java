@@ -142,11 +142,41 @@ public class PedidoTest {
         System.out.println(client.InfoPer());
         //Ingresa el pedido
         Date date = new Date();
-        DateFormat Horanow = new SimpleDateFormat("HH:mm");
-
         Pedido pedido = new Pedido(new ArrayList<DetallePedido>(Arrays.asList(detalle1,detalle2)),date,client);
+        // Visualiza si es disponible
+        System.out.println(pedido.ValidHora());
 
         assertEquals("Horario disponible", pedido.ValidHora());//experado,obtenido
         System.out.println("----Test 4----\n");      
     }
+
+    @Test  
+    public void testIntegracion_RecargoSubTotal() {
+        System.out.println("----Test 5----");      
+        Producto p1 = obtener_producto_catalogo(catalogo,"Analgan");
+        DetallePedido detalle1 = new DetallePedido(p1,1);
+        carrito.add(detalle1);
+        //visualizar el pedido con los productos seleccionados.
+        System.out.println(carrito.toString());
+        Pago pa=new Pago();
+        //Ingresa el tipo de pago
+        pa.crear_pago(true,"");
+        //Ingresa el cliente
+        Cliente client=new Cliente("Dora", 1, pa);
+        System.out.println(client.InfoPer());
+        //Ingresa el pedido
+        Date date = new Date();
+
+        Pedido pedido = new Pedido(new ArrayList<DetallePedido>(Arrays.asList(detalle1)),date,client);
+        // Visualiza recargo
+
+        System.out.println(pedido.GetRecargo(client,p1.getPrecio()));
+        // Visualiza total
+        System.out.println(pedido.TotalPedido());
+
+        assertEquals(4.0, pedido.GetRecargo(client,p1.getPrecio()));//experado,obtenido
+        assertEquals(6.5, pedido.TotalPedido());//experado,obtenido
+        System.out.println("----Test 5----\n");      
+    }
+
 
